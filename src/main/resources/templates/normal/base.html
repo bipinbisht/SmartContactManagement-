@@ -32,21 +32,26 @@
 			<ul class="navbar-nav ml-auto text-uppercase">
 				<li class="nav-item active"><a class="nav-link" th:href="@{/}">Home
 						<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">About</a></li>
+				<!-- </a></li>
+				
+				<li class="nav-item" tabindex="-1" aria-disabled="true"><span
+					th:text="${user.name}"></span></li> -->
+					
+					
+					<li class="nav-item"><a class="nav-link "
+					tabindex="-1" aria-disabled="true"><span th:text="${user.name}">></span></a></li>
+					
+					
 
-				<li class="nav-item"><a class="nav-link " th:href="@{/user-login}"
-					tabindex="-1" aria-disabled="true">Login</a></li>
-
-				<li class="nav-item"><a class="nav-link " th:href="@{/signup}"
-					tabindex="-1" aria-disabled="true">Signup</a></li>
+				<li class="nav-item"><a class="nav-link " th:href="@{/logout}"
+					tabindex="-1" aria-disabled="true">Logout</a></li>
 			</ul>
 
 		</div>
 	</nav>
 	<!--  End of navbar ---------------------------------------->
 
-	
+
 
 	<div th:replace="${content}"></div>
 
