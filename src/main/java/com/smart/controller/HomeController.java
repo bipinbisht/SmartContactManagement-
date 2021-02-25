@@ -73,6 +73,7 @@ public class HomeController {
 			e.printStackTrace();
 			m.addAttribute("user", user);
 			session.setAttribute("message", new Message("Something went Wrong"+e.getMessage(),"alert-danger"));
+			System.out.println();
 			return "signup";
 		}
 		
