@@ -22,9 +22,9 @@ public class UserController {
 		System.out.println("USERNAME=:"+userName);
 		//get the user using username(email)
 		User user = userRepo.getUserByName(userName);
-		System.out.println("User "+user);
+		System.out.println("Userss "+user);
 		
-		m.addAttribute("user", user);
+		m.addAttribute("user", user); 
 		return "normal/user_dashboard";
 	}
 }
