@@ -73,6 +73,7 @@ public class HomeController {
 			e.printStackTrace();
 			m.addAttribute("user", user);
 			session.setAttribute("message", new Message("Something went Wrong"+e.getMessage(),"alert-danger"));
+			System.out.println();
 			return "signup";
 		}
 		
@@ -84,5 +85,12 @@ public class HomeController {
 	{
 		m.addAttribute("title","Login Page");
 		return "login";
+	}
+	
+	@RequestMapping("login-fail")
+	public String loginFail(Model m)
+	{
+		m.addAttribute("title","Login Fail");
+		return "login-fail";
 	}
 }
