@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.smart.dao.UserRepository;
@@ -44,6 +45,22 @@ public class UserController {
 		m.addAttribute("title", "Add Contact");
 		m.addAttribute("contact", new Contact());
 
+		return "normal/add_contact_form";
+	}
+	
+	//processing contact form
+	@PostMapping("/process-contact")
+	public String processContact(@ModelAttribute Contact contact,Principal principal)
+	{
+		String name = principal.getName();
+		User user = userRepo.getUserByName(name);
+		contact.setUser(user);
+		user.getContacts().add(contact);
+		userRepo.save(user);
+		
+		System.out.println(contact);
+		System.out.println("Added to Database");
+		
 		return "normal/add_contact_form";
 	}
 	
