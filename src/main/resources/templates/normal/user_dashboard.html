@@ -6,9 +6,19 @@
 </head>
 	<body>
 		<section>
-
-			<h1>This is Private Dashboard</h1>
-			<h2>Here we are going to write about Smart Contact Manager</h2>
+			<div class="container">
+				<div  class="card">
+					<div class="card-body my-5">
+						<div class="container text-center">
+						<img style="height: 200px; width: 200px;"
+							class="my_profile_picture" alt="not available"
+							th:src="@{'/img/contact_logo.png'}">
+					</div>
+					<h1 class="text-center mt-3 text-secondary font-italic font-weight-light">Start Adding Your Contacts on Cloud...</h1>	
+					<a  th:href="@{/user/add-contact}"class="btn btn-warning mt-4 btn-block text-uppercase text-white">Add Contact</a>
+					</div>
+				</div>
+			</div>
 		</section>
 	</body>
 </html>

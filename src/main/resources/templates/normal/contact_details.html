@@ -38,7 +38,7 @@
 							<tr>
 								<th scope="row">Work</th>
 								<td><span th:text="${contact.work}"></span></td>
-							</tr>
+							</tr> 
 						</tbody>
 					</table>
 					<hr>
@@ -47,8 +47,10 @@
 					</div>
 					<div class="container mt-3">
 
-						<button class="btn btn-danger btn-sm btn-block">Delete</button>
-						<button class="btn btn-success btn-sm btn-block">Update</button>
+						<button th:onclick="|deleteContact(${contact.cId})|"  class="btn btn-danger btn-sm btn-block">Delete</button>
+						<form method="post" th:action="@{'/user/update-contact/'+${contact.cId}}" class="mt-2">
+								<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>
+								</form>
 					</div>
 				</div>
 			</div>

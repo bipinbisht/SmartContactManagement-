@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -46,7 +45,7 @@ public class UserController {
 		System.out.println("USERNAME=:" + userName);
 		// get the user using username(email)
 		User user = userRepo.getUserByName(userName);
-		System.out.println("Userss " + user);
+		System.out.println("Users " + user);
 
 		m.addAttribute("user", user);
 	}
@@ -148,5 +147,79 @@ public class UserController {
 		 
 		return "normal/contact_details";
 	}
+	//delete contact handler
+	@GetMapping("/delete/{cid}")
+	public String deleteContact(@PathVariable("cid") Integer cid,Model m,Principal p,HttpSession session)
+	{
+		String name = p.getName();
+		User user = userRepo.getUserByName(name);
+		Optional<Contact> optional = contactRepo.findById(cid);
+		Contact contact = optional.get();
+		user.getContacts().remove(contact);
+		userRepo.save(user);
+		session.setAttribute("message", new Message("Contact deleted Successfully", "success"));
+		
+		return "redirect:/user/show-contacts/0";
+	}
+	//update handler
+	@PostMapping("/update-contact/{cid}")
+	public String updateContact(@PathVariable("cid")Integer cid,Model m)
+	{
+		m.addAttribute("title", "Update-Contact");
+		 Contact contact = contactRepo.findById(cid).get();
+		 m.addAttribute("contact", contact);
+		return "normal/update_contact";
+	}
 	
+	//process update contact handler
+	@PostMapping("process-update")
+	public String processUpdateContact(@ModelAttribute Contact contact,
+			@RequestParam("profileImage") MultipartFile f,
+			Model m,
+			HttpSession session,Principal p)
+	{
+		try {
+			
+			//old contact details
+			Contact contactold = contactRepo.findById(contact.getcId()).get();
+			//check image if he selected new img or not
+			if(!f.isEmpty())
+			{
+				//file work
+				//upload file to folder and update the name to contact
+				//delete old photo
+				File f1 = new ClassPathResource("static/img").getFile();
+				File f2 = new File(f1,contactold.getImage());
+				f2.delete();
+				//update new photo
+				File saveFile = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+f.getOriginalFilename());
+				Files.copy(f.getInputStream(),path , StandardCopyOption.REPLACE_EXISTING);
+				contact.setImage(f.getOriginalFilename());
+			}
+			else
+			{
+				contact.setImage(contactold.getImage());
+			}
+			
+			User user = userRepo.getUserByName(p.getName());
+			contact.setUser(user);
+			contactRepo.save(contact);
+			session.setAttribute("message", new Message("your contact is updated...","success"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Cname==>"+ contact.getName());
+		System.out.println("CID==>"+ contact.getcId());
+		return "redirect:/user/"+contact.getcId()+"/contact";
+	}
+	
+	//your profile handler
+	@GetMapping("/profile")
+	public String yourProfile(Model m,Principal p)
+	{
+		m.addAttribute("title", "Your Profile");
+
+		return "normal/profile";
+	}
 }
