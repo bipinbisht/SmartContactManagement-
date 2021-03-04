@@ -139,7 +139,7 @@ public class UserController {
 		//check
 		String userName = p.getName();
 		User user = userRepo.getUserByName(userName);
-		System.out.println("====>"+user.getId());
+		System.out.println("=======>"+user.getId());
 		
 		  if(user.getId()==contact.getUser().getId()) 
 		  { m.addAttribute("contact",contact);
