@@ -46,7 +46,7 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
 		.loginPage("/user-login")
 		.loginProcessingUrl("/dologin")
 		.defaultSuccessUrl("/user/index")
-		.failureUrl("/login-fail")
+				/* .failureUrl("/login-fail") */
 		.and().csrf().disable();
 	}
 	
